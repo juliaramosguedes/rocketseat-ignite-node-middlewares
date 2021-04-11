@@ -14,8 +14,7 @@ function checksExistsUserAccount(request, response, next) {
   const user = users.find(user => user.username === username);
 
   if (!user) {
-    response.status(404).json({error: "User not found."});
-    return;
+    return response.status(404).json({error: "User not found."});
   }
 
   request.user = user;
@@ -26,8 +25,7 @@ function checksCreateTodosUserAvailability(request, response, next) {
   const {user} = request;
   
   if (!user.pro && user.todos.length === 10) {
-    response.status(403).json({ error:"10 Todos limit reached. Get pro plan to create more todos." })
-    return;
+    return response.status(403).json({ error:"10 Todos limit reached. Get pro plan to create more todos." })
   }
 
   next();
@@ -37,23 +35,20 @@ function checksTodoExists(request, response, next) {
   const {id} = request.params;
 
   if (!validate(id)) {
-    response.status(400).json({ error: "Invalid id" })
-    return;
+    return response.status(400).json({ error: "Invalid id" })
   }
   
   const {username} = request.headers;
   const user = users.find(user => user.username === username);
 
   if (!user) {
-    response.status(404).json({ error:"User not found" })
-    return;
+    return response.status(404).json({ error:"User not found" })
   }
 
   let todo = user.todos.find(todo => todo.id === id);
 
   if (!todo) {
-    response.status(404).json({ error:"Todo not found" })
-    return;
+    return response.status(404).json({ error:"Todo not found" })
   }
 
   request.user = user;
@@ -65,15 +60,13 @@ function findUserById(request, response, next) {
   const {id} = request.params;
 
   if (!validate(id)) {
-    response.status(400).json({ error:"Invalid id" })
-    return;
+    return response.status(400).json({ error:"Invalid id" })
   }
   
   const user = users.find(user => user.id === id);
 
   if (!user) {
-    response.status(404).json({ error: "User not found." });
-    return;
+    return response.status(404).json({ error: "User not found." });
   }
 
   request.user = user;
